@@ -63,15 +63,17 @@ class GameRunner:
                 print(*(await self.agent.shoot(self.board)))
 
             # handling state updates
-            elif message[0] == "U" and len(message) >= 5:
-                shot_y, shot_x, outcome, cell_state, *changes = message
-
+            elif message[0] == "U":
+                shot_y, shot_x, outcome = message[1:4]
                 self.agent.handle_outcome((shot_x, shot_y), ShotOutcome(int(outcome)))
 
-                cell_state = int(cell_state)
-                for change in changes:
-                    y, x = change.split(",")
-                    self.board[int(y), int(x)] = cell_state
+                if len(message) > 4:
+                    cell_state, *changes = message[4:]
+
+                    cell_state = int(cell_state)
+                    for change in changes:
+                        y, x = change.split(",")
+                        self.board[int(y), int(x)] = cell_state
 
             # unknown messages
             else:
