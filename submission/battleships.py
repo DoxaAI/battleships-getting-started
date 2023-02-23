@@ -40,8 +40,12 @@ class GameRunner:
         print("OK")
 
     def _encode_ships(self, ships: List[Set[Tuple[int, int]]]) -> str:
-        # TODO: implement a way to encode ships
-        raise NotImplementedError
+        return ",".join(
+            [
+                " ".join([" ".join([str(coord) for coord in x]) for x in ship])
+                for ship in ships
+            ]
+        )
 
     async def run(self):
         self._handle_initialisation()
@@ -62,7 +66,6 @@ class GameRunner:
             elif message[0] == "U" and len(message) >= 5:
                 shot_y, shot_x, outcome, cell_state, *changes = message
 
-                # TODO: check if this is the right order we want
                 self.agent.handle_outcome((shot_x, shot_y), ShotOutcome(int(outcome)))
 
                 cell_state = int(cell_state)
