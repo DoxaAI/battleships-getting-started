@@ -13,6 +13,14 @@ class ShotOutcome(IntEnum):
     INVALID_SHOT = 4
 
 
+class CellState(IntEnum):
+    EMPTY = 0
+    HEALTHY = 1
+    MISS = 2
+    HIT = 3
+    DESTROYED = 4
+
+
 class BaseAgent:
     """A base Battleships agent."""
 
@@ -65,7 +73,7 @@ class GameRunner:
             # handling state updates
             elif message[0] == "U":
                 shot_y, shot_x, outcome = message[1:4]
-                self.agent.handle_outcome((shot_x, shot_y), ShotOutcome(int(outcome)))
+                await self.agent.handle_outcome((shot_x, shot_y), ShotOutcome(int(outcome)))
 
                 if len(message) > 4:
                     cell_state, *changes = message[4:]
