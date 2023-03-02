@@ -4,34 +4,8 @@ from typing import List, Set, Tuple
 
 import numpy as np
 
+from battleships.engine import BaseAgent, Board, CellState, SETTINGS, Ship, ShotOutcome
 
-class ShotOutcome(IntEnum):
-    MISS = 0
-    HIT = 1
-    DESTROYED = 2
-    REPEATED_SHOT = 3
-    INVALID_SHOT = 4
-
-
-class CellState(IntEnum):
-    EMPTY = 0
-    HEALTHY = 1
-    MISS = 2
-    HIT = 3
-    DESTROYED = 4
-
-
-class BaseAgent:
-    """A base Battleships agent."""
-
-    async def get_ships(self) -> List[Set[Tuple[int, int]]]:
-        raise NotImplementedError
-
-    async def shoot(self, board: np.ndarray) -> Tuple[int, int]:
-        raise NotImplementedError
-
-    async def handle_outcome(self, shot: Tuple[int, int], outcome: ShotOutcome) -> None:
-        pass
 
 
 class GameRunner:
@@ -73,7 +47,7 @@ class GameRunner:
             # handling state updates
             elif message[0] == "U":
                 shot_y, shot_x, outcome = message[1:4]
-                await self.agent.handle_outcome((shot_x, shot_y), ShotOutcome(int(outcome)))
+                await self.agent.handle_outcome((int(shot_y), int(shot_x)), ShotOutcome(int(outcome)))
 
                 if len(message) > 4:
                     cell_state, *changes = message[4:]
