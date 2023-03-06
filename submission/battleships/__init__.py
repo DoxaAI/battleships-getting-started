@@ -7,7 +7,6 @@ import numpy as np
 from battleships.engine import BaseAgent, Board, CellState, SETTINGS, Ship, ShotOutcome
 
 
-
 class GameRunner:
     def __init__(self, agent: BaseAgent) -> None:
         self.agent = agent
@@ -47,7 +46,9 @@ class GameRunner:
             # handling state updates
             elif message[0] == "U":
                 shot_y, shot_x, outcome = message[1:4]
-                await self.agent.handle_outcome((int(shot_y), int(shot_x)), ShotOutcome(int(outcome)))
+                await self.agent.handle_outcome(
+                    (int(shot_y), int(shot_x)), ShotOutcome(int(outcome))
+                )
 
                 if len(message) > 4:
                     cell_state, *changes = message[4:]

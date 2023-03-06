@@ -10,7 +10,7 @@ sys.path.append(os.path.dirname(os.path.abspath("submission/battleships")))
 
 
 from submission.battleships.engine import BaseAgent, Game
-from submission.agent import Agent, GaussianAgent
+from submission.agent import Agent
 
 
 class BattleshipsCLI:
@@ -24,6 +24,7 @@ class BattleshipsCLI:
         async for player, shot, outcome, _, _ in game.run():
             if player == 0:
                 print(
+                    f"Your move: ({shot[0]}, {shot[1]}).",
                     f"Outcome: {outcome.name}.",
                     "\nYour agent's board",
                     "=" * 21,
@@ -52,7 +53,7 @@ async def main():
     ui = BattleshipsCLI()
 
     # Uncomment the following line to run a game between two different agents
-    # await ui.run(Game(GaussianAgent(), Agent()))
+    # await ui.run(Game(Agent(), Agent()))
 
     # Play using keyboard against your agent
     await ui.run(Game(HumanAgent(), Agent()))

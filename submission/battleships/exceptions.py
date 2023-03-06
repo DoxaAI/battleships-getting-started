@@ -1,26 +1,27 @@
-class ShipRegistrationException(Exception):
+class BattleshipsException(Exception):
+    def __init__(self, msg) -> None:
+        super().__init__(msg)
+
+
+class ShipRegistrationException(BattleshipsException):
     """Ship cannot be registered."""
 
-    def __init__(self, msg) -> None:
-        super().__init__(msg)
+    pass
 
 
-class InvalidShipException(Exception):
+class InvalidShipException(BattleshipsException):
     """Ship cannot be created."""
 
-    def __init__(self, msg) -> None:
-        super().__init__(msg)
+    pass
 
 
-class InvalidShipsCountException(Exception):
+class InvalidShipsCountException(BattleshipsException):
     """Number of ships of different kinds incorrect."""
 
-    def __init__(self, msg) -> None:
-        super().__init__(msg)
+    pass
 
-class ImpossibleShipGenerationException(Exception):
+
+class ImpossibleShipGenerationException(BattleshipsException):
     """Impossible specification of ships to generate."""
 
-    def __init__(self, msg) -> None:
-        super().__init__(msg)
-
+    pass

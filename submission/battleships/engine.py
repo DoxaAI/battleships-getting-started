@@ -10,7 +10,6 @@ from battleships.exceptions import (
     ShipRegistrationException,
 )
 
-
 SETTINGS: Dict[str, Any] = {
     "BOARD_DIMS": (10, 10),
     "ALLOWED_SHIPS": {1: 4, 2: 3, 3: 2, 4: 1},
@@ -38,39 +37,6 @@ class ShipState(IntEnum):
     DAMAGED = 1
     HEALTHY = 2
 
-
-class BaseAgent:
-    """A base agent."""
-
-    async def get_ships(self) -> List[Set[Tuple[int, int]]]:
-        """Returns coordinates of ship cells to create ship objects.
-
-        E.g. 2 ships of 1 cell (1,1 and 8,8), 1 ship of 3 (3,4 3,5 3,6) cells will be encoded as follows:
-        [{(1, 1)}, {(8, 8)}, {(3, 4), (3, 5), (3, 6)}]
-
-        Returns:
-            List[Set[Tuple[int, int]]], where each Tuple[int, int] represents a ship cell coordinate,
-                Set of Tuples is a full ship and List of Sets is a list of all desired ships.
-        """
-        raise NotImplementedError
-
-    async def shoot(self, board: np.ndarray) -> Tuple[int, int]:
-        """Performs a shot to the opponent's board.
-
-        Shot in coordinates 3, 3 will be represented by a tuple
-        (3,3). Additionally, gets a masked opponent's board as an argument.
-
-        Args:
-            board (np.ndarray): Current state of the opponent's board.
-                Unknown ships are masked by CellState.EMPTY values.
-
-        Returns:
-            A Tuple[int, int] representing the coordinates of a desired shot.
-        """
-        raise NotImplementedError
-    
-    async def handle_outcome(self, shot: Tuple[int, int], outcome: ShotOutcome) -> None:
-        pass
 
 class Ship:
     """Representation of a ship.
@@ -138,7 +104,7 @@ class Ship:
         boundaries when considering neighboring cells.
 
         Returns:
-            True if cells are connected, False otherwise.
+            bool: True if cells are connected, False otherwise.
         """
         cell_list: List[Tuple[int, int]] = list(self.ship_cells)
         q: Deque[Tuple[int, int]] = deque()
@@ -162,7 +128,6 @@ class Ship:
 
 class Board:
     """Player's board with ships.
-    TODO: Rewrite docs!!!
 
     Board is an array of size nxm (specified in size). Each cell in the array has a CellState.
     Board also stores all the ships it contains in the ships dictionary,
@@ -339,6 +304,7 @@ class Board:
         board_s: str = "  "
         for i in range(self.size[1]):
             board_s += str(i) + " "
+
         board_s += "\n"
         for i in range(self.size[0]):
             board_s += str(i) + " "
@@ -352,12 +318,44 @@ class Board:
                     char_to_print = "X"
                 board_s += char_to_print + " "
             board_s += "\n"
+
         return board_s
 
     def get_existing_ships_count(self) -> int:
         return sum(
             [bool(ship.state) for ship in {ship for ship in self.ships_cells.values()}]
         )
+
+
+class BaseAgent:
+    """A base agent."""
+
+    async def get_ships(self) -> List[Set[Tuple[int, int]]]:
+        """Returns coordinates of ship cells to create ship objects.
+
+        E.g. 2 ships of 1 cell (1,1 and 8,8), 1 ship of 3 (3,4 3,5 3,6) cells will be encoded as follows:
+        [{(1, 1)}, {(8, 8)}, {(3, 4), (3, 5), (3, 6)}]
+
+        Returns:
+            List[Set[Tuple[int, int]]], where each Tuple[int, int] represents a ship cell coordinate,
+                Set of Tuples is a full ship and List of Sets is a list of all desired ships.
+        """
+        raise NotImplementedError
+
+    async def shoot(self, board: np.ndarray) -> Tuple[int, int]:
+        """Performs a shot to the opponent's board.
+
+        Shot in coordinates 3, 3 will be represented by a tuple
+        (3,3). Additionally, gets a masked opponent's board as an argument.
+
+        Args:
+            board (np.ndarray): Current state of the opponent's board.
+                Unknown ships are masked by CellState.EMPTY values.
+
+        Returns:
+            A Tuple[int, int] representing the coordinates of a desired shot.
+        """
+        raise NotImplementedError
 
 
 class Game:
