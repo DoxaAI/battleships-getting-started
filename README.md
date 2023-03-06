@@ -19,7 +19,7 @@ pip install -U doxa-cli
   - `submission/agent.py`: this is where you should implement your own agent!
   - `submission/doxa.yaml`: this is a configuration file used by DOXA to handle your submission
   - `battleships/`: this is the battleships engine, so you can run the game locally!
-  - `ship_generator/`: directory containing random ship generation code you may want to use 👀 (describe below!) 
+  - `ship_generator/`: directory containing random ship generation code you may want to use 👀 (described below!) 
 - `examples/`: directory containing example agents
   - `random_agent.py`: this is the implementation of the random agent.
   - `gaussian_agent.py`: this is the implementation of the gaussian random agent.
@@ -125,7 +125,7 @@ There are two mandatory methods in the `Agent` class that you have to implement:
 - `shoot(board)`
 
 ### `get_ships()` method
-`get_ships()` should return a list of ships you want to place on your board. To be specific, each ship is represented as a `set` of `tuple`s of `int`s. Therefore, an example of a list of ships would be the following, representing 2 ships, a single-cell ship at (1, 2) and a double-cell ship with cells at (4, 5) and (4, 6):
+`get_ships()` should return a `list` of ships you want to place on your board. To be specific, each ship is represented as a `set` of `tuple`s of `int`s. Therefore, an example of a list of ships would be the following, representing 2 ships, a single-cell ship at (1, 2) and a double-cell ship with cells at (4, 5) and (4, 6):
 ```py
 [{(1, 2)}, {(4, 5), (4, 6)}]
 ```
@@ -168,17 +168,18 @@ This can be used to update agent's internal state if the agent has one!
 
 By default, the agent registers the same ship configuration and shoots at random locations at the board. What interesting ship placement and shooting strategies can you come up with? 👀
 
+## Examples
+We give you 3 simple examples to start with:
+- `examples/random_agent.py` implements an agent that initializes the same ship configuration every time it is run. It shoots uniformly at random cells on the opponent's board. 
+- `examples/gaussian_agent.py` is similar to the previous one, however it shoots more often in the central part of the board (or elsewhere if you play with the mean and variance of the gaussian distributions used!) 
+- `examples/random_ship_agent.py` is an interesting example, since each time it is run, it generates a different ship configuration using the `generate_ships()` method from `submission/ship_generator/random_ships_agent.py`. If you would like to use this method in your very own agent, just use the method - it's already imported for you!
+
 Links worth exploring (keep in mind that their rules may slightly differ from our competition):
 - [https://towardsdatascience.com/coding-an-intelligent-battleship-agent-bf0064a4b319](https://towardsdatascience.com/coding-an-intelligent-battleship-agent-bf0064a4b319)
 - [https://cliambrown.com/battleship/](https://cliambrown.com/battleship/)
 - [https://datagenetics.com/blog/december32011/index.html](https://web.archive.org/web/20221203125223/https://datagenetics.com/blog/december32011/index.html)
 - [https://pageperso.lis-lab.fr/guilherme.fonseca/battleship_conf.pdf](https://pageperso.lis-lab.fr/guilherme.fonseca/battleship_conf.pdf)
 
-## Examples
-We give you 3 simple examples to start with:
-- `examples/random_agent.py` implements an agent that initializes the same ship configuration every time it is run. It shoots uniformly at random cells on the opponent's board. 
-- `examples/gaussian_agent.py` is similar to the previous one, however it shoots more often in the central part of the board (or elsewhere if you play with the mean and variance of the gaussian distributions used!) 
-- `examples/random_ship_agent.py` is an interesting example, since each time it is run, it generates a different ship configuration using the `generate_ships()` method from `submission/ship_generator/random_ships_agent.py`. If you would like to use this method in your very own agent, just use the method - it's already imported for you!
 
 ## Running the game locally
 Who wouldn't want to play against their own agent? You can run the `cli.py` script that by default lets you play using keyboard input against your agent. Keep in mind that you'll have to manually input your ships and shots. Ship initialisation command has a specific format and always needs to initialise all ships at once. Ships are separated by a single comma '`,`' while ship cell coordinates are separated by a space '` `' and are in (`y, x`) format. Example of a valid ship initialisation command (feel free to copy it!):
