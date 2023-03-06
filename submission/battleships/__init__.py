@@ -1,10 +1,8 @@
 import asyncio
-from enum import IntEnum
 from typing import List, Set, Tuple
 
 import numpy as np
-
-from battleships.engine import BaseAgent, Board, CellState, SETTINGS, Ship, ShotOutcome
+from battleships.engine import SETTINGS, BaseAgent, Board, CellState, Ship, ShotOutcome
 
 
 class GameRunner:

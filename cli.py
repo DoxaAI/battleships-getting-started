@@ -1,16 +1,20 @@
 import asyncio
 import os
 import sys
-from typing import Set, List, Tuple
-import numpy as np
 import time
+from typing import List, Set, Tuple
+
+import numpy as np
 
 sys.path.append(os.path.dirname(os.path.abspath("submission/agent.py")))
 sys.path.append(os.path.dirname(os.path.abspath("submission/battleships")))
+sys.path.append(os.path.dirname(os.path.abspath("examples/random_agent.py")))
 
 
-from submission.battleships.engine import BaseAgent, Game
 from submission.agent import Agent
+from submission.battleships.engine import BaseAgent, Game
+
+# from examples.random_agent import RandomAgent
 
 
 class BattleshipsCLI:
@@ -18,7 +22,11 @@ class BattleshipsCLI:
         pass
 
     async def run(self, game: Game) -> None:
-        """Runs the game for the CLI UI."""
+        """Runs the game for the CLI UI.
+
+        Args:
+            game (Game): The Battleships game.
+        """
         player = 0
         shot_number = 0
         async for player, shot, outcome, _, _ in game.run():
@@ -45,8 +53,9 @@ class BattleshipsCLI:
                 shot_number += 1
                 time.sleep(0.01)
 
-
-        print(f"{'You' if player == 0 else 'Your agent'} won after {shot_number} shots!")
+        print(
+            f"{'You' if player == 0 else 'Your agent'} won after {shot_number} shots!"
+        )
 
 
 async def main():
@@ -61,9 +70,7 @@ async def main():
 
 class HumanAgent(BaseAgent):
     async def get_ships(self) -> List[Set[Tuple[int, int]]]:
-        print("B")
-
-        message = input().strip()
+        message = input("Your ships: ").strip()
 
         try:
             return [
@@ -74,7 +81,6 @@ class HumanAgent(BaseAgent):
             raise ValueError("Something went wrong while getting your ships.")
 
     async def shoot(self, board: np.ndarray) -> Tuple[int, int]:
-
         message = input("Your move: ").strip().split(" ")
 
         x, y = int(message[0]), int(message[1])

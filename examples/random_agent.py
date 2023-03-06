@@ -1,8 +1,8 @@
-from typing import List, Set, Tuple
 import random
+from typing import List, Set, Tuple
 
 import numpy as np
-from battleships import BaseAgent, ShotOutcome, main, Board, Ship, SETTINGS
+from battleships import SETTINGS, BaseAgent, Board, Ship, ShotOutcome, main
 
 
 class RandomAgent(BaseAgent):

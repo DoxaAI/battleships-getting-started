@@ -3,7 +3,6 @@ from enum import IntEnum
 from typing import Any, AsyncGenerator, Deque, Dict, List, Literal, Optional, Set, Tuple
 
 import numpy as np
-
 from battleships.exceptions import (
     InvalidShipException,
     InvalidShipsCountException,
@@ -176,6 +175,7 @@ class Board:
                 raise ShipRegistrationException(
                     f"Ship Cell {cell}" f" outside the board!"
                 )
+
             if self.board[cell] == CellState.HEALTHY:
                 raise ShipRegistrationException(
                     f"Ship cell {cell} already " f"occupied by another ship!"
@@ -301,13 +301,13 @@ class Board:
     def __repr__(self) -> str:
         """Encodes player's board."""
 
-        board_s: str = "  "
+        board: str = "  "
         for i in range(self.size[1]):
-            board_s += str(i) + " "
+            board += str(i) + " "
 
-        board_s += "\n"
+        board += "\n"
         for i in range(self.size[0]):
-            board_s += str(i) + " "
+            board += str(i) + " "
             for j in range(self.size[1]):
                 char_to_print: Literal["O", "-", ".", "X"] = "O"
                 if self.board[(i, j)] == CellState.EMPTY:
@@ -316,10 +316,10 @@ class Board:
                     char_to_print = "."
                 elif self.board[(i, j)] in (CellState.HIT, CellState.DESTROYED):
                     char_to_print = "X"
-                board_s += char_to_print + " "
-            board_s += "\n"
+                board += char_to_print + " "
+            board += "\n"
 
-        return board_s
+        return board
 
     def get_existing_ships_count(self) -> int:
         return sum(

@@ -1,8 +1,7 @@
-from typing import List, Set, Tuple, Dict, Optional
 import random
+from typing import Dict, List, Optional, Set, Tuple
 
-import numpy as np
-from battleships import BaseAgent, ShotOutcome, Board, Ship, SETTINGS
+from battleships import Board, Ship
 from battleships.exceptions import ImpossibleShipGenerationException
 
 
@@ -99,7 +98,6 @@ def _generate_ships(
 
         for y, x in ship_cells:
             # remove ship cells from cells_to_populate
-            # print((y, x))
             if (y, x) in cells_to_populate:
                 cells_to_populate.remove((y, x))
 
@@ -139,4 +137,5 @@ def generate_ships(
             return generated_ships
         except:
             continue
+
     raise ImpossibleShipGenerationException("Bad luck with generating ships.")

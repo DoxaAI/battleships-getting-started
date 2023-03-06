@@ -1,9 +1,15 @@
 from typing import List, Set, Tuple
-import random
 
 import numpy as np
-from battleships import BaseAgent, ShotOutcome, main, SETTINGS
-from ship_generator.random_ships_agent import generate_ships
+from battleships import SETTINGS, BaseAgent, ShotOutcome, main
+
+# from battleships.random_ship_generator import generate_ships
+
+
+#################################################################
+#   Modify the Agent class below to implement your own agent.   #
+#   You may define additional methods as you see fit.           #
+#################################################################
 
 
 class Agent(BaseAgent):
