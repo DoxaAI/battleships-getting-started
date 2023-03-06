@@ -200,6 +200,8 @@ and uncommentig:
     # await ui.run(Game(Agent(), Agent()))
 ```
 
+Moreover, you may want to run two completely different agents against each other to compare their performance! You can do it by appropriately modifying one of the lines above and additionally importing your second agent. We leave this bit as an exercise to the reader! 
+
 
 ## Submitting to DOXA
 
