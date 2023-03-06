@@ -1,0 +1,4 @@
+competition: battleships
+environment: cpu
+language: python
+entrypoint: agent.py
