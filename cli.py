@@ -30,6 +30,7 @@ class BattleshipsCLI:
         player = 0
         shot_number = 0
         async for player, shot, outcome, _, _ in game.run():
+            await game.player1.handle_outcome(shot, outcome)
             if player == 0:
                 print(
                     f"Your move: ({shot[0]}, {shot[1]}).",
@@ -41,6 +42,7 @@ class BattleshipsCLI:
                 print(game.board2)
 
             else:
+                await game.player2.handle_outcome(shot, outcome)
                 print(
                     f"Your agent's move: ({shot[0]}, {shot[1]}).",
                     f"Outcome: {outcome.name}.",

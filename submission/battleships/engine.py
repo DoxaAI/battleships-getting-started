@@ -356,6 +356,15 @@ class BaseAgent:
             A Tuple[int, int] representing the coordinates of a desired shot.
         """
         raise NotImplementedError
+    
+    async def handle_outcome(self, shot: Tuple[int, int], outcome: ShotOutcome) -> None:
+        """Handles the outcome of your last shot (optional).
+        
+        Args:
+            shot (Tuple[int, int]): Coordinates of agent's previous shot.
+            outcome (ShotOutcome): The outcome of the previous agent's shot.
+        """
+        pass
 
 
 class Game:
